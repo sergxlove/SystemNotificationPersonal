@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SystemNotificationPersonal.BackTask/SystemNotificationPersonal.BackTask.csproj" />
+  <Project Path="SystemNotificationPersonal.Core/SystemNotificationPersonal.Core.csproj" />
+  <Project Path="SystemNotificationPersonal.DataAccess.Sqlite/SystemNotificationPersonal.DataAccess.Sqlite.csproj" Id="5606db47-c33c-4af8-be79-c800087b26a3" />
+  <Project Path="SystemNotificationPersonal.Server/SystemNotificationPersonal.Server.csproj" Id="4b084ebe-c85f-4716-bb9e-503c4c842242" />
+</Solution>
