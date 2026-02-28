@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SystemNotification.Core.Models
+namespace SystemNotificationPersonal.Core.Models
 {
     public class AppSettingClient
     {
