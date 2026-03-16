@@ -6,5 +6,6 @@
   <Project Path="SystemNotificationPersonal.DataAccess.Sqlite/SystemNotificationPersonal.DataAccess.Sqlite.csproj" Id="5606db47-c33c-4af8-be79-c800087b26a3" />
   <Project Path="SystemNotificationPersonal.GUI/SystemNotificationPersonal.GUI.csproj" Id="d576db15-24db-42fa-9505-9412882a71ff" />
   <Project Path="SystemNotificationPersonal.Server/SystemNotificationPersonal.Server.csproj" Id="4b084ebe-c85f-4716-bb9e-503c4c842242" />
+  <Project Path="SystemNotificationPersonal.StartappConsole/SystemNotificationPersonal.StartappConsole.csproj" Id="601cf8a0-cb73-43fc-a3b4-eddf7981abb4" />
   <Project Path="SystemNotificationPersonal.StartappGUI/SystemNotificationPersonal.StartappGUI.csproj" Id="9a5444aa-bf7d-4974-9f55-d701ee681cae" />
 </Solution>
