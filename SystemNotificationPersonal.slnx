@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="SystemNotificationPersonal.BackTask/SystemNotificationPersonal.BackTask.csproj" />
   <Project Path="SystemNotificationPersonal.ConfigClientGUI/SystemNotificationPersonal.ConfigClientGUI.csproj" Id="83fa9ec8-0458-4145-b01e-b79129f68709" />
+  <Project Path="SystemNotificationPersonal.ConfigServerConsole/SystemNotificationPersonal.ConfigServerConsole.csproj" Id="c4be13d0-7f02-40ad-91ed-12fe4731cf28" />
   <Project Path="SystemNotificationPersonal.ConfigServerGUI/SystemNotificationPersonal.ConfigServerGUI.csproj" Id="02f75465-8114-4c72-a461-f9b5d76b2c66" />
   <Project Path="SystemNotificationPersonal.Core/SystemNotificationPersonal.Core.csproj" />
   <Project Path="SystemNotificationPersonal.DataAccess.Sqlite/SystemNotificationPersonal.DataAccess.Sqlite.csproj" Id="5606db47-c33c-4af8-be79-c800087b26a3" />
