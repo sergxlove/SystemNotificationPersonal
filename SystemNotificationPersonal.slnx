@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="SystemNotificationPersonal.BackTask/SystemNotificationPersonal.BackTask.csproj" />
+  <Project Path="SystemNotificationPersonal.ConfigClientConsole/SystemNotificationPersonal.ConfigClientConsole.csproj" Id="9d9c5f45-4882-4f27-be07-ab08ff6776ca" />
   <Project Path="SystemNotificationPersonal.ConfigClientGUI/SystemNotificationPersonal.ConfigClientGUI.csproj" Id="83fa9ec8-0458-4145-b01e-b79129f68709" />
   <Project Path="SystemNotificationPersonal.ConfigServerConsole/SystemNotificationPersonal.ConfigServerConsole.csproj" Id="c4be13d0-7f02-40ad-91ed-12fe4731cf28" />
   <Project Path="SystemNotificationPersonal.ConfigServerGUI/SystemNotificationPersonal.ConfigServerGUI.csproj" Id="02f75465-8114-4c72-a461-f9b5d76b2c66" />
