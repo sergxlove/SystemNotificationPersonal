@@ -58,7 +58,7 @@ namespace SystemNotificationPersonal.Server
             {
                 try
                 {
-                    Request? req = await request.ReadFromJsonAsync<Request>();
+                    LoginRequest? req = await request.ReadFromJsonAsync<LoginRequest>();
                     if (req is null) return Results.BadRequest("Неверные данные");
                     UsersEntity user = new()
                     {
