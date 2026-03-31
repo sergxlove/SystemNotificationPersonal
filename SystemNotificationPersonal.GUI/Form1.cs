@@ -112,7 +112,7 @@ namespace SystemNotificationPersonal.GUI
 
         private void ShutdownComputer()
         {
-            Process.Start("shutdown", "/s /f /t 0");
+            //Process.Start("shutdown", "/s /f /t 0");
         }
 
         private void button2_Click(object sender, EventArgs e)

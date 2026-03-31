@@ -1,7 +1,9 @@
-using Microsoft.VisualBasic.ApplicationServices;
+using Serilog;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using SystemNotificationPersonal.Core.Models;
+using SystemNotificationPersonal.DataAccess.Sqlite.Models;
 
 namespace SystemNotificationPersonal.StartappGUI
 {
@@ -10,6 +12,9 @@ namespace SystemNotificationPersonal.StartappGUI
         public Form1()
         {
             InitializeComponent();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("D:\\projects\\projects\\SystemNotificationPersonal\\SystemNotificationPersonal.StartappGUI\\log.txt")
+                .CreateLogger();
             _settings = new();
             if (!File.Exists(_settings.PathAppsettings))
             {
@@ -22,11 +27,12 @@ namespace SystemNotificationPersonal.StartappGUI
             }
             textBox4.Text = "1";
             textBox3.Text = _settings.AddressServer;
+            Log.Information("Приложение запущено");
             SetupToolTip();
         }
 
         private bool _isNotify = false;
-        private AppSetting _settings;
+        private AppSettingStartApp _settings;
         private ToolTip? toolTip;
 
         private async void button1_Click(object sender, EventArgs e)
@@ -46,9 +52,11 @@ namespace SystemNotificationPersonal.StartappGUI
                                 MessageBox.Show($"Успешно!");
                                 _isNotify = false;
                                 button1.Text = "Запустить оповещение";
+                                Log.Information("Оповещение остановлено");
                                 break;
                             default:
                                 MessageBox.Show($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
+                                Log.Error($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
                                 break;
                         }
                     }
@@ -56,6 +64,7 @@ namespace SystemNotificationPersonal.StartappGUI
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Произошла ошибка: {ex.Message}");
+                    Log.Error($"Произошла ошибка: {ex.Message}");
                 }
             }
             else
@@ -70,24 +79,27 @@ namespace SystemNotificationPersonal.StartappGUI
                     if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                     {
                         MessageBox.Show("Логин и пароль не может иметь пустые значения");
+                        Log.Warning("Неправильный ввод логина или пароля");
                         return;
                     }
                     if (string.IsNullOrEmpty(adressServer))
                     {
                         MessageBox.Show("Адрес сервера не может иметь пустые значения");
+                        Log.Warning("Неправильный ввод адреса сервера");
                         return;
                     }
                     if (variableExit <= 0 || variableExit >= 6)
                     {
                         MessageBox.Show("Тип маршрута может быть только от 1 до 5");
+                        Log.Warning("Неправильный ввод типа маршрута");
                         return;
                     }
-                    Users user = new()
+                    UsersEntity user = new()
                     {
                         Login = login,
                         Password = password
                     };
-                    Request req = new Request()
+                    LoginRequest req = new LoginRequest()
                     {
                         Id = user.Id,
                         Login = user.Login,
@@ -106,9 +118,11 @@ namespace SystemNotificationPersonal.StartappGUI
                                 MessageBox.Show(responseBody);
                                 button1.Text = "Остановить оповещение";
                                 _isNotify = true;
+                                Log.Information($"Оповещение запущено от {req.Login}");
                                 break;
                             default:
                                 MessageBox.Show($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
+                                Log.Error($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
                                 break;
                         }
                     }
@@ -116,6 +130,7 @@ namespace SystemNotificationPersonal.StartappGUI
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Произошла ошибка: {ex.Message}");
+                    Log.Error($"Произошла ошибка: {ex.Message}");
                 }
             }
         }

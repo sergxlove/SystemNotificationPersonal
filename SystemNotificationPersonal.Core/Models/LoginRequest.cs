@@ -1,6 +1,6 @@
-﻿namespace SystemNotificationPersonal.Server.Models
+﻿namespace SystemNotificationPersonal.Core.Models
 {
-    public class Request
+    public class LoginRequest
     {
         public Guid Id { get; set; }
         public string Login { get; set; } = string.Empty;
