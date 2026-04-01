@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SystemNotificationPersonal.Core.Models;
 using SystemNotificationPersonal.DataAccess.Sqlite;
 using SystemNotificationPersonal.DataAccess.Sqlite.Abstractions;
@@ -48,6 +49,9 @@ namespace SystemNotificationPersonal.Server
                     .AllowCredentials();
                 });
             });
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
             var app = builder.Build();
 
             app.MapPost("/start", async (HttpRequest request,
@@ -59,7 +63,11 @@ namespace SystemNotificationPersonal.Server
                 try
                 {
                     LoginRequest? req = await request.ReadFromJsonAsync<LoginRequest>();
-                    if (req is null) return Results.BadRequest("Неверные данные");
+                    if (req is null)
+                    {
+                        Log.Warning("Неверный данные для входа");
+                        return Results.BadRequest("Неверные данные");
+                    }
                     UsersEntity user = new()
                     {
                         Id = req.Id,
@@ -78,15 +86,18 @@ namespace SystemNotificationPersonal.Server
                             VariableExit = req.VariableExit
                         };
                         await hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+                        Log.Information($"Оповещение успешно запущено с кодом: {code}");
                         return Results.Ok(new { Status = $"Оповещение запущено, код: {code} " });
                     }
                     else
                     {
+                        Log.Warning("Неверный ввод логина и пароля");
                         return Results.BadRequest("Неверный логин или пароль");
                     }
                 }
                 catch (Exception ex)
                 {
+                    Log.Error($"Произошла ошибка: {ex.Message}");
                     return Results.Problem($"Произошла ошибка: {ex.Message}");
                 }
             });
@@ -104,6 +115,7 @@ namespace SystemNotificationPersonal.Server
                     VariableExit = 1
                 };
                 await hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+                Log.Information("Оповещение остановлено");
                 return Results.Ok(new { Status = "Оповещение остановлено" });
             });
 

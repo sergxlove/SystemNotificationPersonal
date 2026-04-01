@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using SystemNotificationPersonal.Core.Models;
 using SystemNotificationPersonal.StartappConsole.Cases;
 
@@ -12,6 +13,9 @@ namespace SystemNotificationPersonal.StartappConsole
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             ExecuteCommandCore cmd = new ExecuteCommandCore();
             AppSettingStartApp appSetting = new();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
             appSetting.ReadConfig();
             if (appSetting.FirstStart)
             {
@@ -22,6 +26,8 @@ namespace SystemNotificationPersonal.StartappConsole
             string commandLine = string.Empty;
             bool exit = false;
             Console.WriteLine("Используя данное программное обеспечение, вы принимаете все условия лицензии. См LISENCE.txt");
+            Log.Information("Пользователь принял лицензию на данное программное обеспечени");
+            Log.Information("Приложение запущено");
             while (!exit)
             {
                 Console.Write($"user > ");
