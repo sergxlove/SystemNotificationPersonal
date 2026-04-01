@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic.ApplicationServices;
+using Serilog;
 using System.Diagnostics;
 using System.Text;
 using SystemNotificationPersonal.Core.Models;
@@ -29,6 +29,9 @@ namespace SystemNotificationPersonal.ConfigServerGUI
             _serviceCollection.AddScoped<IUsersRepository, UsersRepository>();
             _serviceProvider = _serviceCollection.BuildServiceProvider();
             SetupToolTip();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("D:\\projects\\projects\\SystemNotificationPersonal\\SystemNotificationPersonal.StartappGUI\\log.txt")
+                .CreateLogger();
         }
 
         private AppSettingServer _settings;
@@ -45,6 +48,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
             label5.Text = "Текущее значение " + _settings.IPAddressCors;
             label14.Text = "Текущее значение " + _settings.Protocol;
             MessageBox.Show("Конфигурация успешно сброшена");
+            Log.Information("Конфигурация сброшена до стандартных");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -64,6 +68,8 @@ namespace SystemNotificationPersonal.ConfigServerGUI
             label5.Text = "Текущее значение " + _settings.IPAddressCors;
             label14.Text = "Текущее значение " + _settings.Protocol;
             MessageBox.Show("Конфигурация успешно обновлена");
+            Log.Information($"Конфигурация была обновлена, значения: {_settings.Port}," +
+                $" {_settings.ConnectionString}, {_settings.IPAddressCors}, {_settings.Protocol}");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -105,6 +111,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                 if (textBox4.Text == string.Empty || textBox5.Text == string.Empty)
                 {
                     MessageBox.Show("Необходимо ввсети логин и пароль");
+                    Log.Warning("Ошибка ввода логина или пароля");
                     return;
                 }
                 string login = textBox4.Text;
@@ -118,10 +125,12 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                 };
                 await userRepo!.AddAsync(users);
                 MessageBox.Show("Профиль успешно добавлен");
+                Log.Information($"Профиль добвлен: {users.Login}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message}");
+                Log.Error(ex.Message);
             }
         }
 
@@ -133,6 +142,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                     || textBox8.Text == string.Empty)
                 {
                     MessageBox.Show("Необходимо ввсети логин и пароли");
+                    Log.Warning("Ошибка ввода логина или пароля");
                     return;
                 }
                 string login = textBox6.Text;
@@ -148,15 +158,18 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                 if (!await userRepo!.VerifyAsync(users))
                 {
                     MessageBox.Show("Необходимо ввсети логин и пароли");
+                    Log.Warning("Ошибка ввода логина или пароля");
                     return;
                 }
                 users.Password = newPassword;
                 await userRepo!.UpdateAsync(users);
                 MessageBox.Show($"Пароль профиля {login} успешно обновлен");
+                Log.Information($"Пароль профиля {login} обновлен");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message}");
+                Log.Error($"{ex.Message}");
             }
         }
 
@@ -173,10 +186,12 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                 var userRepo = _serviceProvider.GetService<IUsersRepository>();
                 await userRepo!.DeleteAsync(login);
                 MessageBox.Show($"Профиль {login} удален");
+                Log.Information($"Профиль {login} удален");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message}");
+                Log.Error(ex.Message );
             }
         }
 
@@ -192,10 +207,12 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                     WindowStyle = ProcessWindowStyle.Normal
                 };
                 Process.Start(processInfo);
+                Log.Information("Сервер запущен");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                Log.Error(ex.Message);
             }
         }
 
@@ -212,10 +229,12 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                     Verb = "runas"
                 };
                 Process.Start(processInfo);
+                Log.Information("Сервер запущен с правами администратора");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                Log.Error(ex.Message);
             }
         }
 

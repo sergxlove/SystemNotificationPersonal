@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -86,11 +87,13 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                     if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                     {
                         Console.WriteLine("Логин и пароль не может иметь пустые значения");
+                        Log.Warning("Ошибка при вводе логина или пароля");
                         return;
                     }
                     if (variableExit <= 0 || variableExit >= 6)
                     {
                         Console.WriteLine("Тип маршрута может быть только от 1 до 5");
+                        Log.Warning("Ошибка при выборе типа маршрута");
                         return;
                     }
                     UsersEntity user = new()
@@ -115,9 +118,11 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                             case HttpStatusCode.OK:
                                 string responseBody = await response.Content.ReadAsStringAsync();
                                 Console.WriteLine(responseBody);
+                                Log.Information("Оповещение запущено");
                                 break;
                             default:
                                 Console.WriteLine($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
+                                Log.Warning($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
                                 break;
                         }
                     }
@@ -125,6 +130,7 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                    Log.Error($"Произошла ошибка: {ex.Message}");
                 }
             }
         }
@@ -151,9 +157,11 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                             case HttpStatusCode.OK:
                                 string responseBody = await response.Content.ReadAsStringAsync();
                                 Console.WriteLine($"Успешно!");
+                                Log.Information("Оповещение успешно запущено");
                                 break;
                             default:
                                 Console.WriteLine($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
+                                Log.Warning($"Ошибка: {response.StatusCode} - {response.ReasonPhrase}");
                                 break;
                         }
                     }
@@ -161,6 +169,7 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                    Log.Error($"Произошла ошибка: {ex.Message}");
                 }
             }
         }
@@ -181,6 +190,7 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                 if (args.Length == 0)
                 {
                     Console.WriteLine("Необходимо ввести аргументы");
+                    Log.Warning("Ошибка при вводе аргумента");
                     return;
                 }
                 Dictionary<string, string> argsPairs = new Dictionary<string, string>();
@@ -209,13 +219,16 @@ namespace SystemNotificationPersonal.StartappConsole.Cases
                             if (item.Value is null)
                             {
                                 Console.WriteLine("Необходимо ввести параметр");
+                                Log.Warning("Ошибка ввода параметра");
                                 return;
                             }
                             data.Settings.AddressServer = item.Value;
                             data.Settings.CreateConfig();
+                            Log.Information($"Адрес изменен на {data.Settings.AddressServer}");
                             break;
                         default:
                             Console.WriteLine($"Неизвестный аргумент: {item.Key}");
+                            Log.Warning($"Неизвестный аргумент: {item.Key}");
                             break;
                     }
                 }

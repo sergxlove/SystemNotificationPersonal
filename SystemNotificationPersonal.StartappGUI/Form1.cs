@@ -141,10 +141,12 @@ namespace SystemNotificationPersonal.StartappGUI
             if (string.IsNullOrEmpty(adressServer))
             {
                 MessageBox.Show("Адрес сервера не может иметь пустые значения");
+                Log.Warning("Адрес сервера имеет пустое значение");
                 return;
             }
             _settings.AddressServer = adressServer;
             _settings.CreateConfig();
+            Log.Information($"Адрес {_settings.AddressServer} успешно сохранен");
         }
 
         private void SetupToolTip()

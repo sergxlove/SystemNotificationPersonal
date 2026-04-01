@@ -1,3 +1,4 @@
+using Serilog;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -47,6 +48,10 @@ namespace SystemNotificationPersonal.GUI
             }
             LoadImage(_pathDirectoryPhoto);
             InitializeTimer();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
+            Log.Information("Приложение успешно запущено");
         }
 
         private AppSettingClient _appSetting;
@@ -112,6 +117,7 @@ namespace SystemNotificationPersonal.GUI
 
         private void ShutdownComputer()
         {
+            Log.Information("Выключение клмпбютера");
             //Process.Start("shutdown", "/s /f /t 0");
         }
 
@@ -170,10 +176,12 @@ namespace SystemNotificationPersonal.GUI
             _appSetting.ReadConfig();
             if (codeHash == _appSetting.CodeHash)
             {
+                Log.Information($"Приложение закрыто с помощью кода: {code}");
                 this.Close();
             }
             else
             {
+                Log.Warning($"Ошибка закрытия приложения с помощью кода: {code}");
                 textBoxCodeForExit.ForeColor = Color.Red;
             }
         }
