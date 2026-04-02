@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.SignalR.Client;
+using Serilog;
 using System.Diagnostics;
 using SystemNotificationPersonal.BackTask.Models;
-using Microsoft.AspNetCore.SignalR.Client;
 using SystemNotificationPersonal.Core.Models;
 
 namespace SystemNotificationPersonal.BackTask
@@ -21,6 +22,9 @@ namespace SystemNotificationPersonal.BackTask
                 .WithUrl($"http://{_defaultConfig.AddressServer}/notify")
                 .WithAutomaticReconnect()
                 .Build();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -36,6 +40,7 @@ namespace SystemNotificationPersonal.BackTask
                 {
                     case "start":
                         _process = OpenExe();
+                        Log.Information("Оповещение запущено");
                         break;
                     case "stop":
                         if (_process == null) return;
@@ -49,6 +54,7 @@ namespace SystemNotificationPersonal.BackTask
                             }
                         }
                         _process.Dispose();
+                        Log.Information("Оповещение остановлено");
                         break;
                     default:
                         break;
@@ -79,6 +85,7 @@ namespace SystemNotificationPersonal.BackTask
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "SignalR connection error");
+                    Log.Information(ex.Message);
                     await Task.Delay(5000);
                 }
             }

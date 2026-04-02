@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using SystemNotificationPersonal.ConfigServerConsole.Cases;
 using SystemNotificationPersonal.ConfigServerConsole.Interfaces;
 using SystemNotificationPersonal.ConfigServerConsole.Services;
@@ -28,6 +29,9 @@ namespace SystemNotificationPersonal.ConfigServerConsole
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             ExecuteCommandCore cmd = new ExecuteCommandCore();
             DataCore data = new DataCore(appSetting);
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
             cmd.AddRange(ConsoleCases.UseConsoleCases());
             string commandLine = string.Empty;
             bool exit = false;

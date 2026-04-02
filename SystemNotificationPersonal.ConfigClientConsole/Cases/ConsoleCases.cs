@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System.Diagnostics;
 using SystemNotificationPersonal.ConfigClientConsole.Interfaces;
 
@@ -95,6 +96,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                                     WindowStyle = ProcessWindowStyle.Normal,
                                     Verb = "runas"
                                 };
+                                Log.Information("Фоновая задача запущена с правами администратора");
                                 break;
                             default:
                                 Console.WriteLine($"Неизвестный аргумент: {args[0]}");
@@ -109,12 +111,14 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                             UseShellExecute = true,
                             WindowStyle = ProcessWindowStyle.Normal
                         };
+                        Log.Information("Фоновая задача запущена");
                     }
                     data.StartingProcess = Process.Start(processInfo);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
+                    Log.Error(ex.Message);
                 }
             }
         }
@@ -143,10 +147,12 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                         }
                     }
                     data.StartingProcess.Dispose();
+                    Log.Information("Фоновая задача остановлена");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
+                    Log.Error(ex.Message);
                 }
             }
         }
@@ -205,6 +211,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                                 }
                                 data.Settings.AddressServer = item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр адрес изменен на {data.Settings.AddressServer}");
                                 break;
                             case "--exe":
                             case "-e":
@@ -225,6 +232,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                                 }
                                 data.Settings.PathExe = item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр путь исполняемого файла изменен на {data.Settings.PathExe}");
                                 break;
                             case "--header":
                             case "-h":
@@ -235,6 +243,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                                 }
                                 data.Settings.Header = item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр заголовки изменен на {data.Settings.Header}");
                                 break;
                             case "--theme":
                             case "-t":
@@ -250,6 +259,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                                 }
                                 data.Settings.Theme = item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр тема изменен на {data.Settings.Theme}");
                                 break;
                             case "--time":
                             case "-tm":
@@ -268,6 +278,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole.Cases
                                     }
                                     data.Settings.TimeBeforeOffPC = time;
                                     data.Settings.CreateConfig();
+                                    Log.Information($"Параметр адрес изменен на {data.Settings.AddressServer}");
                                 }
                                 catch
                                 {
