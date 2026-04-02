@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using SystemNotificationPersonal.ConfigClientConsole.Cases;
 using SystemNotificationPersonal.Core.Models;
 
@@ -20,9 +21,13 @@ namespace SystemNotificationPersonal.ConfigClientConsole
                 appSetting.CreateConfig();
             }
             DataCore data = new DataCore(appSetting);
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
             cmd.AddRange(ConsoleCases.UseConsoleCases());
             string commandLine = string.Empty;
             bool exit = false;
+            Log.Information("Приложение запущено");
             Console.WriteLine("Используя данное программное обеспечение, вы принимаете все условия лицензии. См LISENCE.txt");
             while (!exit)
             {

@@ -1,3 +1,4 @@
+using Serilog;
 using System.Diagnostics;
 using System.Text;
 using SystemNotificationPersonal.Core.Models;
@@ -17,6 +18,9 @@ namespace SystemNotificationPersonal.ConfigClientGUI
                 _settings.CreateConfig();
             }
             SetupToolTip();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("")
+                .CreateLogger();
         }
 
         private AppSettingClient _settings;
@@ -78,10 +82,12 @@ namespace SystemNotificationPersonal.ConfigClientGUI
                 label12.Text = "Текущее значение " + _settings.Header;
                 label13.Text = "Текущее значение " + _settings.TimeBeforeOffPC;
                 MessageBox.Show("Конфигурация успешно обновлена");
+                Log.Information("Конфигурация обновлена");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                Log.Error(ex.Message);
             }
         }
 
@@ -100,6 +106,7 @@ namespace SystemNotificationPersonal.ConfigClientGUI
             label12.Text = "Текущее значение " + _settings.Header;
             label13.Text = "Текущее значение " + _settings.TimeBeforeOffPC;
             MessageBox.Show("Конфигурация успешно сброшена");
+            Log.Information("Конфигурация сброшена");
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -114,10 +121,12 @@ namespace SystemNotificationPersonal.ConfigClientGUI
                     WindowStyle = ProcessWindowStyle.Normal
                 };
                 Process.Start(processInfo);
+                Log.Information("Фоновая задача запущена");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
+                Log.Information(ex.Message);
             }
         }
 
@@ -134,10 +143,12 @@ namespace SystemNotificationPersonal.ConfigClientGUI
                     Verb = "runas"
                 };
                 Process.Start(processInfo);
+                Log.Information("Фоновая задача запущена с правами администраторра");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                Log.Information(ex.Message);
             }
         }
 

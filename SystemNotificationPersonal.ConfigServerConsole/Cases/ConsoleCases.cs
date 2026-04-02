@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System.Diagnostics;
 using SystemNotificationPersonal.ConfigServerConsole.Interfaces;
 using SystemNotificationPersonal.DataAccess.Sqlite.Models;
@@ -97,6 +98,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                                 WindowStyle = ProcessWindowStyle.Normal,
                                 Verb = "runas"
                             };
+                            Log.Information("Приложение запущено c правами администратора");
                             break;
                         default:
                             return;
@@ -110,6 +112,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                         UseShellExecute = true,
                         WindowStyle = ProcessWindowStyle.Normal
                     };
+                    Log.Information("Приложение запущено без прав администратора");
                 }
                 data.StartingProcess = Process.Start(processInfo);
             }
@@ -139,10 +142,12 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                         }
                     }
                     data.StartingProcess.Dispose();
+                    Log.Information("Приложение остановлено");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Log.Error(ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -202,6 +207,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                                 }
                                 data.Settings.Protocol = item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр протокол был изменен на {data.Settings.Protocol}");
                                 break;
                             case "--cors":
                             case "-c":
@@ -212,6 +218,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                                 }
                                 data.Settings.IPAddressCors = item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр cors был изменен на {data.Settings.IPAddressCors}");
                                 break;
                             case "--connectionString":
                             case "-cs":
@@ -222,6 +229,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                                 }
                                 data.Settings.ConnectionString = "Data Source=" + item.Value;
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр строка подключения был изменен на {data.Settings.ConnectionString}");
                                 break;
                             case "--port":
                             case "-p":
@@ -232,6 +240,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                                 }
                                 data.Settings.Port = Convert.ToInt32(item.Value);
                                 data.Settings.CreateConfig();
+                                Log.Information($"Параметр порт был изменен на {data.Settings.Port}");
                                 break;
                             default:
                                 Console.WriteLine($"Неизвестный аргумент: {item.Key}");
@@ -286,6 +295,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                         };
                         await userService!.AddAsync(user);
                         Console.WriteLine("Пользователь создан");
+                        Log.Information($"Профиль {user.Login} создан");
                         break;
                     case "--update":
                     case "-u":
@@ -311,6 +321,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                         }
                         await userService.UpdateAsync(user);
                         Console.WriteLine("Пароль пользователя обновлен");
+                        Log.Information($"Профиль {user.Login} обновлен");
                         break;
                     case "--delete":
                     case "-d":
@@ -328,6 +339,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                         }
                         await userService.DeleteAsync(login);
                         Console.WriteLine("Пользователь удален");
+                        Log.Information($"Профиль {login} удален");
                         break;
                     default:
                         Console.WriteLine($"Неизвестный аргумент: {args[0]}");
