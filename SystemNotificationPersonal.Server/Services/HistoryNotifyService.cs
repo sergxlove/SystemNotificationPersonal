@@ -11,21 +11,21 @@ namespace SystemNotificationPersonal.Server.Services
         {
             _repository = repository;
         }
-        public async Task<Guid> AddAsync(HistoryNotifyEntity history)
+        public async Task<Guid> AddAsync(HistoryNotifyEntity history, CancellationToken token)
         {
-            return await _repository.AddAsync(history);
+            return await _repository.AddAsync(history, token);
         }
-        public async Task<List<HistoryNotifyEntity>> GetAsync()
+        public async Task<List<HistoryNotifyEntity>> GetAsync(CancellationToken token)
         {
-            return await _repository.GetAsync();
+            return await _repository.GetAsync(token);
         }
-        public async Task<List<HistoryNotifyEntity>> GetByDateAsync(DateTime date)
+        public async Task<List<HistoryNotifyEntity>> GetByDateAsync(DateTime date, CancellationToken token)
         {
-            return await _repository.GetByDateAsync(date);
+            return await _repository.GetByDateAsync(date, token);
         }
-        public async Task<List<HistoryNotifyEntity>> GetByTypeAlarmAsync(string alarmType)
+        public async Task<List<HistoryNotifyEntity>> GetByTypeAlarmAsync(string alarmType, CancellationToken token)
         {
-            return await _repository.GetByTypeAlarmAsync(alarmType);
+            return await _repository.GetByTypeAlarmAsync(alarmType, token);
         }
     }
 }

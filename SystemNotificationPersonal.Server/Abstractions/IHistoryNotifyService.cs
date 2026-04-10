@@ -4,9 +4,9 @@ namespace SystemNotificationPersonal.Server.Abstractions
 {
     public interface IHistoryNotifyService
     {
-        Task<Guid> AddAsync(HistoryNotifyEntity history);
-        Task<List<HistoryNotifyEntity>> GetAsync();
-        Task<List<HistoryNotifyEntity>> GetByDateAsync(DateTime date);
-        Task<List<HistoryNotifyEntity>> GetByTypeAlarmAsync(string alarmType);
+        Task<Guid> AddAsync(HistoryNotifyEntity history, CancellationToken token);
+        Task<List<HistoryNotifyEntity>> GetAsync(CancellationToken token);
+        Task<List<HistoryNotifyEntity>> GetByDateAsync(DateTime date, CancellationToken token);
+        Task<List<HistoryNotifyEntity>> GetByTypeAlarmAsync(string alarmType, CancellationToken token);
     }
 }

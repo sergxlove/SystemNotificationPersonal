@@ -4,10 +4,11 @@ namespace SystemNotificationPersonal.Server.Abstractions
 {
     public interface IUsersService
     {
-        Task<Guid> AddAsync(UsersEntity user);
-        Task<bool> CheckAsync(string login);
-        Task<int> DeleteAsync(string login);
-        Task<int> UpdateAsync(UsersEntity user);
-        Task<bool> VerifyAsync(UsersEntity user);
+        Task<Guid> AddAsync(UsersEntity user, CancellationToken token);
+        Task<bool> CheckAsync(string login, CancellationToken token);
+        Task<int> DeleteAsync(string login, CancellationToken token);
+        Task<int> UpdatePasswordAsync(UsersEntity user, CancellationToken token);
+        Task<int> UpdateRoleAsync(UsersEntity user, CancellationToken token);
+        Task<bool> VerifyAsync(UsersEntity user, CancellationToken token);
     }
 }

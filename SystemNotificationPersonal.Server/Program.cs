@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -50,15 +51,15 @@ namespace SystemNotificationPersonal.Server
                 });
             });
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
                 .CreateLogger();
             var app = builder.Build();
 
             app.MapPost("/start", async (HttpRequest request,
-                IUsersService userService,
-                ICodesService codesService,
-                IHasherService hasherService,
-                IHubContext<NotifyHub> hubContext) =>
+                [FromServices] IUsersService userService,
+                [FromServices] ICodesService codesService,
+                [FromServices] IHasherService hasherService,
+                IHubContext<NotifyHub> hubContext, 
+                CancellationToken token) =>
             {
                 try
                 {
@@ -74,11 +75,11 @@ namespace SystemNotificationPersonal.Server
                         Login = req.Login,
                         Password = req.Password,
                     };
-                    var isVerify = await userService.VerifyAsync(user);
+                    var isVerify = await userService.VerifyAsync(user, token);
                     if (isVerify)
                     {
-                        var code = await codesService.GetCodeAsync(DateOnly.FromDateTime(DateTime.Now));
-                        if (code == string.Empty) code = await codesService.GenerateAsync();
+                        var code = await codesService.GetCodeAsync(DateOnly.FromDateTime(DateTime.Now), token);
+                        if (code == string.Empty) code = await codesService.GenerateAsync(token);
                         var message = new Message
                         {
                             TypeWork = "start",
@@ -103,11 +104,12 @@ namespace SystemNotificationPersonal.Server
             });
 
             app.MapGet("stop", async (IHubContext<NotifyHub> hubContext,
-               ICodesService codesService,
-               IHasherService hasherService) =>
+               [FromServices] ICodesService codesService,
+               [FromServices] IHasherService hasherService, 
+               CancellationToken token) =>
             {
-                var code = await codesService.GetCodeAsync(DateOnly.FromDateTime(DateTime.Now));
-                if (code == string.Empty) code = await codesService.GenerateAsync();
+                var code = await codesService.GetCodeAsync(DateOnly.FromDateTime(DateTime.Now), token);
+                if (code == string.Empty) code = await codesService.GenerateAsync(token);
                 var message = new Message
                 {
                     TypeWork = "stop",

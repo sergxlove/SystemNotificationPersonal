@@ -19,7 +19,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Services
 
         public async Task<int> UpdateAsync(UsersEntity user)
         {
-            return await _repository.UpdateAsync(user);
+            return await _repository.UpdatePasswordAsync(user);
         }
 
         public async Task<int> DeleteAsync(string login)
