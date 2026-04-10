@@ -12,29 +12,29 @@ namespace SystemNotificationPersonal.Server.Services
             _repository = repository;
         }
 
-        public async Task<Guid> AddAsync(UsersEntity user)
+        public async Task<Guid> AddAsync(UsersEntity user, CancellationToken token)
         {
-            return await _repository.AddAsync(user);
+            return await _repository.AddAsync(user, token);
         }
-
-        public async Task<int> UpdateAsync(UsersEntity user)
+        public async Task<bool> CheckAsync(string login, CancellationToken token)
         {
-            return await _repository.UpdateAsync(user);
+            return await _repository.CheckAsync(login, token);
         }
-
-        public async Task<int> DeleteAsync(string login)
+        public async Task<int> DeleteAsync(string login, CancellationToken token)
         {
-            return await _repository.DeleteAsync(login);
+            return await _repository.DeleteAsync(login, token);
         }
-
-        public async Task<bool> VerifyAsync(UsersEntity user)
+        public async Task<int> UpdatePasswordAsync(UsersEntity user, CancellationToken token)
         {
-            return await _repository.VerifyAsync(user);
+            return await _repository.UpdatePasswordAsync(user, token);
         }
-
-        public async Task<bool> CheckAsync(string login)
+        public async Task<int> UpdateRoleAsync(UsersEntity user, CancellationToken token)
         {
-            return await _repository.CheckAsync(login);
+            return await _repository.UpdateRoleAsync(user, token);
+        }
+        public async Task<bool> VerifyAsync(UsersEntity user, CancellationToken token)
+        {
+            return await _repository.VerifyAsync(user, token);
         }
     }
 }

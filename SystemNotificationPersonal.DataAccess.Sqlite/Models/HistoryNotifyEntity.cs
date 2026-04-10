@@ -6,6 +6,6 @@
         public Guid IdCode { get; set; }
         public Guid IdUser { get; set; } 
         public string TypeAlarm { get; set; } = string.Empty;
-        public DateTime DateNotify { get; set; }
+        public DateTime DateNotify { get; set; } 
     }
 }

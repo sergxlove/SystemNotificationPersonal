@@ -13,34 +13,34 @@ namespace SystemNotificationPersonal.DataAccess.Sqlite.Repositories
             _context = context;
         }
 
-        public async Task<Guid> AddAsync(HistoryNotifyEntity history)
+        public async Task<Guid> AddAsync(HistoryNotifyEntity history, CancellationToken token)
         {
-            await _context.HistoryNotify.AddAsync(history);
-            await _context.SaveChangesAsync();
+            await _context.HistoryNotify.AddAsync(history, token);
+            await _context.SaveChangesAsync(token);
             return history.Id;
         }
 
-        public async Task<List<HistoryNotifyEntity>> GetByDateAsync(DateTime date)
+        public async Task<List<HistoryNotifyEntity>> GetByDateAsync(DateTime date, CancellationToken token)
         {
             return await _context.HistoryNotify
                 .AsNoTracking()
                 .Where(a => a.DateNotify.Date == date.Date)
-                .ToListAsync();
+                .ToListAsync(token);
         }
 
-        public async Task<List<HistoryNotifyEntity>> GetByTypeAlarmAsync(string alarmType)
+        public async Task<List<HistoryNotifyEntity>> GetByTypeAlarmAsync(string alarmType, CancellationToken token)
         {
             return await _context.HistoryNotify
                 .AsNoTracking()
                 .Where(a => a.TypeAlarm == alarmType)
-                .ToListAsync();
+                .ToListAsync(token);
         }
 
-        public async Task<List<HistoryNotifyEntity>> GetAsync()
+        public async Task<List<HistoryNotifyEntity>> GetAsync(CancellationToken token)
         {
             return await _context.HistoryNotify
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(token);
         }
 
     }

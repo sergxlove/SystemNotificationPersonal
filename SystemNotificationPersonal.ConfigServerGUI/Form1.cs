@@ -162,7 +162,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                     return;
                 }
                 users.Password = newPassword;
-                await userRepo!.UpdateAsync(users);
+                await userRepo!.UpdatePasswordAsync(users);
                 MessageBox.Show($"Пароль профиля {login} успешно обновлен");
                 Log.Information($"Пароль профиля {login} обновлен");
             }
