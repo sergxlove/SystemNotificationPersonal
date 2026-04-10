@@ -108,6 +108,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
         {
             try
             {
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
                 if (textBox4.Text == string.Empty || textBox5.Text == string.Empty)
                 {
                     MessageBox.Show("Необходимо ввсети логин и пароль");
@@ -123,7 +124,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                     Login = login,
                     Password = password
                 };
-                await userRepo!.AddAsync(users);
+                await userRepo!.AddAsync(users, cts.Token);
                 MessageBox.Show("Профиль успешно добавлен");
                 Log.Information($"Профиль добвлен: {users.Login}");
             }
@@ -138,6 +139,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
         {
             try
             {
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
                 if (textBox6.Text == string.Empty || textBox7.Text == string.Empty
                     || textBox8.Text == string.Empty)
                 {
@@ -155,14 +157,14 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                     Login = login,
                     Password = oldPassword
                 };
-                if (!await userRepo!.VerifyAsync(users))
+                if (!await userRepo!.VerifyAsync(users, cts.Token))
                 {
                     MessageBox.Show("Необходимо ввсети логин и пароли");
                     Log.Warning("Ошибка ввода логина или пароля");
                     return;
                 }
                 users.Password = newPassword;
-                await userRepo!.UpdatePasswordAsync(users);
+                await userRepo!.UpdatePasswordAsync(users, cts.Token);
                 MessageBox.Show($"Пароль профиля {login} успешно обновлен");
                 Log.Information($"Пароль профиля {login} обновлен");
             }
@@ -177,6 +179,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
         {
             try
             {
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
                 if (textBox9.Text == string.Empty)
                 {
                     MessageBox.Show("Необходимо ввсети логин");
@@ -184,7 +187,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
                 }
                 string login = textBox9.Text;
                 var userRepo = _serviceProvider.GetService<IUsersRepository>();
-                await userRepo!.DeleteAsync(login);
+                await userRepo!.DeleteAsync(login, cts.Token);
                 MessageBox.Show($"Профиль {login} удален");
                 Log.Information($"Профиль {login} удален");
             }

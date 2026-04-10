@@ -265,6 +265,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
 
             public async Task Execute(string[] args, DataCore data, ServiceProvider provider)
             {
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
                 await Task.CompletedTask;
                 if (args.Length == 0)
                 {
@@ -293,7 +294,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                             Login = login,
                             Password = password
                         };
-                        await userService!.AddAsync(user);
+                        await userService!.AddAsync(user, cts.Token);
                         Console.WriteLine("Пользователь создан");
                         Log.Information($"Профиль {user.Login} создан");
                         break;
@@ -314,12 +315,12 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                             Login = login,
                             Password = password
                         };
-                        if (!await userService!.CheckAsync(login))
+                        if (!await userService!.CheckAsync(login, cts.Token))
                         {
                             Console.WriteLine("Пользователь с таким логином не найден");
                             return;
                         }
-                        await userService.UpdateAsync(user);
+                        await userService.UpdatePasswordAsync(user, cts.Token);
                         Console.WriteLine("Пароль пользователя обновлен");
                         Log.Information($"Профиль {user.Login} обновлен");
                         break;
@@ -332,12 +333,12 @@ namespace SystemNotificationPersonal.ConfigServerConsole.Cases
                             Console.WriteLine("Логин не может иметь пустое значение");
                             return;
                         }
-                        if (!await userService!.CheckAsync(login))
+                        if (!await userService!.CheckAsync(login, cts.Token))
                         {
                             Console.WriteLine("Пользователь с таким логином не найден");
                             return;
                         }
-                        await userService.DeleteAsync(login);
+                        await userService.DeleteAsync(login, cts.Token);
                         Console.WriteLine("Пользователь удален");
                         Log.Information($"Профиль {login} удален");
                         break;
