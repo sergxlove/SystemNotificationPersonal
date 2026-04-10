@@ -1,15 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using SystemNotificationPersonal.Core.Models;
 using SystemNotificationPersonal.DataAccess.Sqlite;
 using SystemNotificationPersonal.DataAccess.Sqlite.Abstractions;
-using SystemNotificationPersonal.DataAccess.Sqlite.Models;
 using SystemNotificationPersonal.DataAccess.Sqlite.Repositories;
 using SystemNotificationPersonal.Server.Abstractions;
+using SystemNotificationPersonal.Server.Extensions;
 using SystemNotificationPersonal.Server.Hubs;
-using SystemNotificationPersonal.Server.Models;
 using SystemNotificationPersonal.Server.Services;
 
 namespace SystemNotificationPersonal.Server
@@ -54,73 +51,7 @@ namespace SystemNotificationPersonal.Server
                 .CreateLogger();
             var app = builder.Build();
 
-            app.MapPost("/start", async (HttpRequest request,
-                [FromServices] IUsersService userService,
-                [FromServices] ICodesService codesService,
-                [FromServices] IHasherService hasherService,
-                IHubContext<NotifyHub> hubContext, 
-                CancellationToken token) =>
-            {
-                try
-                {
-                    LoginRequest? req = await request.ReadFromJsonAsync<LoginRequest>();
-                    if (req is null)
-                    {
-                        Log.Warning("Неверный данные для входа");
-                        return Results.BadRequest("Неверные данные");
-                    }
-                    UsersEntity user = new()
-                    {
-                        Id = req.Id,
-                        Login = req.Login,
-                        Password = req.Password,
-                    };
-                    var isVerify = await userService.VerifyAsync(user, token);
-                    if (isVerify)
-                    {
-                        var code = await codesService.GetCodeAsync(DateOnly.FromDateTime(DateTime.Now), token);
-                        if (code == string.Empty) code = await codesService.GenerateAsync(token);
-                        var message = new Message
-                        {
-                            TypeWork = "start",
-                            CodeExit = hasherService.GetHash(code),
-                            VariableExit = req.VariableExit
-                        };
-                        await hubContext.Clients.All.SendAsync("ReceiveMessage", message);
-                        Log.Information($"Оповещение успешно запущено с кодом: {code}");
-                        return Results.Ok(new { Status = $"Оповещение запущено, код: {code} " });
-                    }
-                    else
-                    {
-                        Log.Warning("Неверный ввод логина и пароля");
-                        return Results.BadRequest("Неверный логин или пароль");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error($"Произошла ошибка: {ex.Message}");
-                    return Results.Problem($"Произошла ошибка: {ex.Message}");
-                }
-            });
-
-            app.MapGet("stop", async (IHubContext<NotifyHub> hubContext,
-               [FromServices] ICodesService codesService,
-               [FromServices] IHasherService hasherService, 
-               CancellationToken token) =>
-            {
-                var code = await codesService.GetCodeAsync(DateOnly.FromDateTime(DateTime.Now), token);
-                if (code == string.Empty) code = await codesService.GenerateAsync(token);
-                var message = new Message
-                {
-                    TypeWork = "stop",
-                    CodeExit = hasherService.GetHash(code),
-                    VariableExit = 1
-                };
-                await hubContext.Clients.All.SendAsync("ReceiveMessage", message);
-                Log.Information("Оповещение остановлено");
-                return Results.Ok(new { Status = "Оповещение остановлено" });
-            });
-
+            app.MapAllEndpoints();
             app.MapHub<NotifyHub>("/notify");
 
             app.Run();
