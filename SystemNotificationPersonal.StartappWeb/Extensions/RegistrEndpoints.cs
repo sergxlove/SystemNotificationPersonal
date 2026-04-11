@@ -7,6 +7,7 @@ namespace SystemNotificationPersonal.StartappWeb.Extensions
         public static IEndpointRouteBuilder MapAllEndpoints(this IEndpointRouteBuilder app)
         {
             app.MapNotifyEndpoints();
+            app.MapPagesEndpoints();
 
             return app;
         }
