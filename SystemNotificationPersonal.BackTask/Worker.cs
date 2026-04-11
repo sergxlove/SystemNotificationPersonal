@@ -23,7 +23,7 @@ namespace SystemNotificationPersonal.BackTask
                 .WithAutomaticReconnect()
                 .Build();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logBackTask.txt")
                 .CreateLogger();
         }
 

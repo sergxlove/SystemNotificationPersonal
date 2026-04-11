@@ -22,7 +22,7 @@ namespace SystemNotificationPersonal.ConfigClientConsole
             }
             DataCore data = new DataCore(appSetting);
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logConfigClientConsole.txt")
                 .CreateLogger();
             cmd.AddRange(ConsoleCases.UseConsoleCases());
             string commandLine = string.Empty;

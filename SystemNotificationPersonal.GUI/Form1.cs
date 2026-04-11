@@ -49,7 +49,7 @@ namespace SystemNotificationPersonal.GUI
             LoadImage(_pathDirectoryPhoto);
             InitializeTimer();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logGUI.txt")
                 .CreateLogger();
             Log.Information("Приложение успешно запущено");
         }

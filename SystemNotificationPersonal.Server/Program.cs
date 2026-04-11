@@ -48,6 +48,7 @@ namespace SystemNotificationPersonal.Server
                 });
             });
             Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("D:\\documents\\logsSNP\\logServer.txt")
                 .CreateLogger();
             var app = builder.Build();
 

@@ -1,4 +1,6 @@
-﻿namespace SystemNotificationPersonal.StartappWeb.Extensions
+﻿using SystemNotificationPersonal.StartappWeb.Endpoints;
+
+namespace SystemNotificationPersonal.StartappWeb.Extensions
 {
     public static class RegistrEndpoints
     {

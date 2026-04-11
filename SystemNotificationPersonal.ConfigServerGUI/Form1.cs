@@ -30,7 +30,7 @@ namespace SystemNotificationPersonal.ConfigServerGUI
             _serviceProvider = _serviceCollection.BuildServiceProvider();
             SetupToolTip();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logConfigServerGUI.txt")
                 .CreateLogger();
         }
 
