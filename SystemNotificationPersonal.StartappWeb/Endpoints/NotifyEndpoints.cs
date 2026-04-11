@@ -4,6 +4,7 @@
     {
         public static IEndpointRouteBuilder MapNotifyEndpoints(this IEndpointRouteBuilder app)
         {
+
             return app;
         }
     }

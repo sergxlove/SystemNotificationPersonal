@@ -14,7 +14,7 @@ namespace SystemNotificationPersonal.StartappConsole
             ExecuteCommandCore cmd = new ExecuteCommandCore();
             AppSettingStartApp appSetting = new();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logStartappConsole.txt")
                 .CreateLogger();
             appSetting.ReadConfig();
             if (appSetting.FirstStart)

@@ -19,7 +19,7 @@ namespace SystemNotificationPersonal.ConfigClientGUI
             }
             SetupToolTip();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logConfigClientGUI.txt")
                 .CreateLogger();
         }
 

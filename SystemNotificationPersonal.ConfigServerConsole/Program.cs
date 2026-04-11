@@ -30,7 +30,7 @@ namespace SystemNotificationPersonal.ConfigServerConsole
             ExecuteCommandCore cmd = new ExecuteCommandCore();
             DataCore data = new DataCore(appSetting);
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("")
+                .WriteTo.File("D:\\documents\\logsSNP\\logConfigServerConsole.txt")
                 .CreateLogger();
             cmd.AddRange(ConsoleCases.UseConsoleCases());
             string commandLine = string.Empty;

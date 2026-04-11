@@ -13,7 +13,7 @@ namespace SystemNotificationPersonal.StartappGUI
         {
             InitializeComponent();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("D:\\projects\\projects\\SystemNotificationPersonal\\SystemNotificationPersonal.StartappGUI\\log.txt")
+                .WriteTo.File("D:\\documents\\logsSNP\\logStartappWeb.txt")
                 .CreateLogger();
             _settings = new();
             if (!File.Exists(_settings.PathAppsettings))
