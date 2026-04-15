@@ -37,6 +37,7 @@ namespace SystemNotificationPersonal.StartappWeb
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
             app.UseStaticFiles();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseCors("AllowAll");
             app.UseSwagger();
             app.UseSwaggerUI();
