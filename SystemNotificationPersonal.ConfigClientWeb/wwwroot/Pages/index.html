@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Styles/index.css">
+    <title>Конфигурация клиента</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <span class="header-icon">⚙️</span>
+            <h1 data-i18n="title">Конфигурация клиента</h1>
+        </div>
+        <div class="header-right">
+            <div class="lang-selector">
+                <div class="lang-btn" onclick="toggleLangDropdown()">
+                    <span class="flag" id="currentLangFlag">🇷🇺</span>
+                    <span id="currentLangName">Русский</span>
+                    <span>▼</span>
+                </div>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option" onclick="setLanguage('ru')">
+                        <span class="flag">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
+                    </div>
+                    <div class="lang-option" onclick="setLanguage('en')">
+                        <span class="flag">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                    </div>
+                    <div class="lang-option" onclick="setLanguage('de')">
+                        <span class="flag">🇩🇪</span>
+                        <span class="lang-name">Deutsch</span>
+                    </div>
+                    <div class="lang-option" onclick="setLanguage('fr')">
+                        <span class="flag">🇫🇷</span>
+                        <span class="lang-name">Français</span>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+                <span class="theme-icon">🌙</span>
+            </div>
+        </div>
+    </header>
+    <div class="main">
+        <div class="card">
+            <div class="config-item">
+                <div class="config-header">
+                    <span class="config-label" data-i18n="serverAddress">Адрес сервера</span>
+                    <span class="help-icon" data-i18n-tooltip="serverHelp" data-tooltip="URL или IP-адрес сервера для подключения клиента.">❓</span>
+                </div>
+                <div class="config-input">
+                    <input type="text" id="serverAddress" placeholder="192.168.1.100:5000">
+                </div>
+                <div class="current-value" id="currentServerAddress" data-i18n="current">Текущее значение: </div>
+            </div>
+            <div class="config-item">
+                <div class="config-header">
+                    <span class="config-label" data-i18n="exePath">Путь к исполняемому файлу</span>
+                    <span class="help-icon" data-i18n-tooltip="exeHelp" data-tooltip="Полный путь к EXE-файлу главного приложения.">❓</span>
+                </div>
+                <div class="config-input">
+                    <input type="text" id="exePath" placeholder="C:\Program Files\App\app.exe">
+                </div>
+                <div class="current-value" id="currentExePath" data-i18n="current">Текущее значение: </div>
+            </div>
+            <div class="config-item">
+                <div class="config-header">
+                    <span class="config-label" data-i18n="theme">Тема приложения</span>
+                    <span class="help-icon" data-i18n-tooltip="themeHelp" data-tooltip="Визуальное оформление интерфейса.">❓</span>
+                </div>
+                <div class="config-input">
+                    <input type="text" id="theme" placeholder="light / dark">
+                </div>
+                <div class="current-value" id="currentTheme" data-i18n="current">Текущее значение: </div>
+            </div>
+            <div class="config-item">
+                <div class="config-header">
+                    <span class="config-label" data-i18n="header">Заголовок формы оповещения</span>
+                    <span class="help-icon" data-i18n-tooltip="headerHelp" data-tooltip="Текст в заголовке окна главного приложения.">❓</span>
+                </div>
+                <div class="config-input">
+                    <input type="text" id="headerText" placeholder="Система оповещения">
+                </div>
+                <div class="current-value" id="currentHeader" data-i18n="current">Текущее значение: </div>
+            </div>
+            <div class="config-item">
+                <div class="config-header">
+                    <span class="config-label" data-i18n="timeout">Время до выключения (сек)</span>
+                    <span class="help-icon" data-i18n-tooltip="timeoutHelp" data-tooltip="Таймер обратного отсчета перед автоматическим завершением работы.">❓</span>
+                </div>
+                <div class="config-input">
+                    <input type="number" id="timeout" placeholder="60" min="0">
+                </div>
+                <div class="current-value" id="currentTimeout" data-i18n="current">Текущее значение: </div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-success" onclick="applyConfig()" data-i18n="apply">Применить</button>
+            <button class="btn btn-primary" onclick="showConfig()" data-i18n="show">Показать конфигурацию</button>
+            <button class="btn btn-secondary" onclick="resetConfig()" data-i18n="reset">Сброс</button>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-success" onclick="startApp()" data-i18n="start">Запустить</button>
+            <button class="btn btn-warning" onclick="startAppAsAdmin()" data-i18n="startAdmin">Запустить с правами администратора</button>
+        </div>
+    </div>
+    <footer class="footer">
+        <span data-i18n="ready">Готов к работе</span>
+        <span>Конфигурация клиента | Версия 1.0.0</span>
+    </footer>
+    <div class="modal" id="configModal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content">
+            <h3 data-i18n="currentConfig">Текущая конфигурация</h3>
+            <pre id="configContent"></pre>
+            <button onclick="closeModal()" data-i18n="close">Закрыть</button>
+        </div>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="../Scripts/index.js"></script>
+</body>
+</html>
