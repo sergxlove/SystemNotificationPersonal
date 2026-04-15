@@ -60,6 +60,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -89,6 +90,7 @@ body {
     0%, 100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.05);
     }
@@ -320,9 +322,11 @@ body {
     border: 1px solid var(--border);
     color: var(--header-text);
 }
+
 .theme-toggle:hover {
     background: rgba(255,255,255,0.15);
 }
+
 @media (max-width: 600px) {
     .error-container {
         border-radius: 16px;
