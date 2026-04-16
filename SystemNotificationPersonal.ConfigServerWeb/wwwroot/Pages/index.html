@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Styles/index.css">
+    <title>Конфигурация сервера</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <span class="header-icon">🖥️</span>
+            <h1 data-i18n="title">Конфигурация сервера</h1>
+        </div>
+        <div class="header-right">
+            <div class="lang-selector">
+                <div class="lang-btn" onclick="toggleLangDropdown()">
+                    <span class="flag" id="currentLangFlag">🇷🇺</span>
+                    <span id="currentLangName">Русский</span>
+                    <span>▼</span>
+                </div>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option" onclick="setLanguage('ru')">
+                        <span class="flag">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
+                    </div>
+                    <div class="lang-option" onclick="setLanguage('en')">
+                        <span class="flag">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                    </div>
+                    <div class="lang-option" onclick="setLanguage('de')">
+                        <span class="flag">🇩🇪</span>
+                        <span class="lang-name">Deutsch</span>
+                    </div>
+                    <div class="lang-option" onclick="setLanguage('fr')">
+                        <span class="flag">🇫🇷</span>
+                        <span class="lang-name">Français</span>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+                <span class="theme-icon">🌙</span>
+            </div>
+        </div>
+    </header>
+    <div class="main">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('config')" data-i18n="tabConfig">Определение переменных</div>
+            <div class="tab" onclick="switchTab('profiles')" data-i18n="tabProfiles">Управление профилями</div>
+        </div>
+        <div id="configTab" class="tab-content active">
+            <div class="card">
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-label" data-i18n="port">Порт сервера</span>
+                        <span class="help-icon" data-i18n-tooltip="portHelp" data-tooltip="Номер сетевого порта для подключения к серверу.">❓</span>
+                    </div>
+                    <div class="config-input">
+                        <input type="number" id="port" placeholder="5000">
+                    </div>
+                    <div class="current-value" id="currentPort"></div>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-label" data-i18n="dbPath">Путь к базе данных</span>
+                        <span class="help-icon" data-i18n-tooltip="dbHelp" data-tooltip="Локальный путь к файлу базы данных.">❓</span>
+                    </div>
+                    <div class="config-input">
+                        <input type="text" id="dbPath" placeholder="Data Source=database.db">
+                    </div>
+                    <div class="current-value" id="currentDbPath"></div>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-label" data-i18n="cors">Диапазон IP адресов</span>
+                        <span class="help-icon" data-i18n-tooltip="corsHelp" data-tooltip="Пулы IP-адресов разрешенные для подключения.">❓</span>
+                    </div>
+                    <div class="config-input">
+                        <input type="text" id="cors" placeholder="* или http://localhost:3000">
+                    </div>
+                    <div class="current-value" id="currentCors"></div>
+                </div>
+                <div class="config-item">
+                    <div class="config-header">
+                        <span class="config-label" data-i18n="protocol">Сетевой протокол</span>
+                        <span class="help-icon" data-i18n-tooltip="protocolHelp" data-tooltip="Правила обмена данными между клиентом и сервером.">❓</span>
+                    </div>
+                    <div class="config-input">
+                        <input type="text" id="protocol" placeholder="http или https">
+                    </div>
+                    <div class="current-value" id="currentProtocol"></div>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-success" onclick="applyConfig()" data-i18n="apply">Применить</button>
+                    <button class="btn btn-primary" onclick="showConfig()" data-i18n="show">Показать конфигурацию</button>
+                    <button class="btn btn-secondary" onclick="resetConfig()" data-i18n="reset">Сбросить</button>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-success" onclick="startServer()" data-i18n="start">Запустить сервер</button>
+                    <button class="btn btn-primary" onclick="startServerAsAdmin()" data-i18n="startAdmin">Запустить с правами администратора</button>
+                </div>
+            </div>
+        </div>
+        <div id="profilesTab" class="tab-content">
+            <div class="group-box">
+                <div class="group-title" data-i18n="createProfile">Создание профиля</div>
+                <div class="form-row">
+                    <label data-i18n="login">Логин:</label>
+                    <input type="text" id="newLogin" placeholder="Введите логин">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="password">Пароль:</label>
+                    <input type="password" id="newPassword" placeholder="Введите пароль">
+                </div>
+                <button class="btn btn-success" onclick="createProfile()" data-i18n="create">Создать</button>
+            </div>
+            <div class="group-box">
+                <div class="group-title" data-i18n="updatePassword">Обновление пароля</div>
+                <div class="form-row">
+                    <label data-i18n="login">Логин:</label>
+                    <input type="text" id="updateLogin" placeholder="Введите логин">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="oldPassword">Старый пароль:</label>
+                    <input type="password" id="oldPassword" placeholder="Введите старый пароль">
+                </div>
+                <div class="form-row">
+                    <label data-i18n="newPassword">Новый пароль:</label>
+                    <input type="password" id="updateNewPassword" placeholder="Введите новый пароль">
+                </div>
+                <button class="btn btn-primary" onclick="updatePassword()" data-i18n="update">Обновить</button>
+            </div>
+            <div class="group-box">
+                <div class="group-title" data-i18n="deleteProfile">Удаление профиля</div>
+                <div class="form-row">
+                    <label data-i18n="login">Логин:</label>
+                    <input type="text" id="deleteLogin" placeholder="Введите логин">
+                </div>
+                <button class="btn btn-danger" onclick="deleteProfile()" data-i18n="delete">Удалить</button>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <span data-i18n="ready">Готов к работе</span>
+        <span>Конфигурация сервера | Версия 1.0.0</span>
+    </footer>
+    <div class="modal" id="configModal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content">
+            <h3 data-i18n="currentConfig">Текущая конфигурация</h3>
+            <pre id="configContent"></pre>
+            <button onclick="closeModal()" data-i18n="close">Закрыть</button>
+        </div>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+    <script src="../Scripts/index.js"></script>
+</body>
+</html>
