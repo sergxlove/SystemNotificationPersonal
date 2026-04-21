@@ -23,8 +23,8 @@ namespace SystemNotificationPersonal.Core.Models
         {
             Port = 5005;
             IPAddressCors = "192.168.";
-            PathAppsettings = Directory.GetCurrentDirectory() + "\\appsettingsServer.json";
-            ConnectionString = "Data Source=" + Directory.GetCurrentDirectory() + "\\data.db";
+            PathAppsettings = "D:\\documents\\logsSNP" + "\\appsettingsServer.json";
+            ConnectionString = "Data Source=" + "D:\\documents\\logsSNP" + "\\data.db";
             Protocol = "http";
             PathExe = Directory.GetCurrentDirectory() + "\\SystemNotificationPeople.exe";
             FirstStart = false;
