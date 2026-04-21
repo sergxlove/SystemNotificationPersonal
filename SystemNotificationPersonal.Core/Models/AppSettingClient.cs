@@ -23,7 +23,7 @@ namespace SystemNotificationPersonal.Core.Models
 
         public AppSettingClient()
         {
-            PathAppsettings = Directory.GetCurrentDirectory() + "\\appsettingsClient.json";
+            PathAppsettings = "D:\\documents\\logsSNP" + "\\appsettingsClient.json";
             PathExe = Directory.GetCurrentDirectory() + "\\SystemNotificationPeopleGUI.exe";
             AddressServer = "localhost:5005";
             Theme = "light";

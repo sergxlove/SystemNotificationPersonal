@@ -18,7 +18,7 @@ namespace SystemNotificationPersonal.Core.Models
         public AppSettingStartApp()
         {
             AddressServer = "localhost:5005";
-            PathAppsettings = Directory.GetCurrentDirectory() + "\\appsettingsStartApp.json";
+            PathAppsettings = "D:\\documents\\logsSNP" + "\\appsettingsStartApp.json";
             FirstStart = false;
         }
 
