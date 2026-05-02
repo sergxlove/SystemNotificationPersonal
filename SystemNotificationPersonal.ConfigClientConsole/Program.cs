@@ -13,7 +13,6 @@ namespace SystemNotificationPersonal.ConfigClientConsole
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             ExecuteCommandCore cmd = new ExecuteCommandCore();
             AppSettingClient appSetting = new AppSettingClient();
-            appSetting.PathAppsettings = "D:\\documents\\SystemNotificationPeople\\ClientApp\\Windows\\appsettings.json";
             appSetting.CreateConfig();
             appSetting.ReadConfig();
             if (appSetting.FirstStart)
