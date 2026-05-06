@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="SystemNotificationPeronal.Tests/SystemNotificationPeronal.Tests.csproj" Id="656799cf-8bf1-42e6-af9b-c3f77a25bff7" />
   <Project Path="SystemNotificationPersonal.BackTask/SystemNotificationPersonal.BackTask.csproj" />
   <Project Path="SystemNotificationPersonal.ConfigClientConsole/SystemNotificationPersonal.ConfigClientConsole.csproj" Id="9d9c5f45-4882-4f27-be07-ab08ff6776ca" />
   <Project Path="SystemNotificationPersonal.ConfigClientGUI/SystemNotificationPersonal.ConfigClientGUI.csproj" Id="83fa9ec8-0458-4145-b01e-b79129f68709" />
