@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SystemNotificationPersonal.Core\SystemNotificationPersonal.Core.csproj" />
+    <ProjectReference Include="..\SystemNotificationPersonal.DataAccess.Sqlite\SystemNotificationPersonal.DataAccess.Sqlite.csproj" />
   </ItemGroup>
 
 </Project>
