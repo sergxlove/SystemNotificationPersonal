@@ -24,13 +24,18 @@ namespace SystemNotificationPersonal.Server
             }
             builder.WebHost.UseUrls($"{settings.Protocol}://*:{settings.Port}");
             builder.Services.AddSignalR();
+
             builder.Services.AddDbContext<SystemNotificationDbContext>(options =>
                 options.UseSqlite(settings.ConnectionString));
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IUsersService, UsersService>();
             builder.Services.AddScoped<ICodesExitRepository, CodesExitRepository>();
             builder.Services.AddScoped<ICodesService, CodesService>();
+            builder.Services.AddScoped<IHistoryNotifyRepository, HistoryNotifyRepository>();
+            builder.Services.AddScoped<IHistoryNotifyService, HistoryNotifyService>();
             builder.Services.AddScoped<IHasherService, HasherService>();
+            builder.Services.AddScoped<IGmailService, GmailService>();
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowLocalNetwork", policy =>
@@ -47,6 +52,7 @@ namespace SystemNotificationPersonal.Server
                     .AllowCredentials();
                 });
             });
+
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File("D:\\documents\\logsSNP\\logServer.txt")
                 .CreateLogger();
