@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 using System.Threading.RateLimiting;
 using SystemNotificationPersonal.ConfigServerWeb.Extensions;
+using SystemNotificationPersonal.Core.Models;
 
 namespace SystemNotificationPersonal.ConfigServerWeb
 {
@@ -32,6 +33,16 @@ namespace SystemNotificationPersonal.ConfigServerWeb
                           .AllowAnyHeader()
                           .AllowCredentials();
                 });
+            });
+            builder.Services.AddSingleton<AppSettingServer>(sp =>
+            {
+                var settings = new AppSettingServer();
+                settings.ReadConfig();
+                if (settings.FirstStart)
+                {
+                    settings.CreateConfig();
+                }
+                return settings;
             });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
