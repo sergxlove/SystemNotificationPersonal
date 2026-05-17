@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 using System.Threading.RateLimiting;
 using SystemNotificationPersonal.ConfigClientWeb.Extensions;
+using SystemNotificationPersonal.Core.Models;
 
 namespace SystemNotificationPersonal.ConfigClientWeb
 {
@@ -22,6 +23,16 @@ namespace SystemNotificationPersonal.ConfigClientWeb
                     opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                     opt.QueueLimit = 10;
                 });
+            });
+            builder.Services.AddSingleton<AppSettingClient>(sp =>
+            {
+                var settings = new AppSettingClient();
+                settings.ReadConfig();
+                if (settings.FirstStart)
+                {
+                    settings.CreateConfig();
+                }
+                return settings;
             });
             builder.Services.AddCors(options =>
             {
