@@ -13,6 +13,8 @@ namespace SystemNotificationPersonal.StartappWeb
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File("D:\\documents\\logsSNP\\logStartappWeb.txt")
                 .CreateLogger();
+            builder.Services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             builder.Services.AddRateLimiter(options =>
             {
                 options.AddFixedWindowLimiter("GeneralPolicy", opt =>
