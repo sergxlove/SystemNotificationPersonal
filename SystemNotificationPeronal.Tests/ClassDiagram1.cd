@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SystemNotificationPeronal.Tests.IntegrationTests.CodesExitRepositoryTests" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAEAAAAAAARAAAgAABEAAAAAAAQAAAAIDAgAAAAAAYA=</HashCode>
+      <FileName>IntegrationTests\CodesExitRepositoryTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemNotificationPeronal.Tests.IntegrationTests.HistoryNotifyRepositoryTests" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAIAAAkAFAABgAAAAAAIAAQoAAACAAQEAEAACAEEA=</HashCode>
+      <FileName>IntegrationTests\HistoryNotifyRepositoryTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemNotificationPeronal.Tests.IntegrationTests.IntegrationTestBase" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAgAAAAABAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>IntegrationTests\IntegrationTestBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemNotificationPeronal.Tests.IntegrationTests.UsersRepositoryTests" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAgAAwBAAIoAIgAAAAAAAAgAIKAACBAAAAAAAAA=</HashCode>
+      <FileName>IntegrationTests\UsersRepositoryTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemNotificationPeronal.Tests.UnitTests.AppsettingClientTests" Collapsed="true">
+    <Position X="7.5" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABEAAAAAoAIAAgAAAAQFQAAEACAAAgAAAAAACABAAQ=</HashCode>
+      <FileName>UnitTests\AppsettingClientTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemNotificationPeronal.Tests.UnitTests.AppsettingServerTests" Collapsed="true">
+    <Position X="10.5" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AADEAAAAAIAIAAgAAAEQBQgAEAChIAgAAAAAACABAAQ=</HashCode>
+      <FileName>UnitTests\AppsettingServerTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SystemNotificationPeronal.Tests.UnitTests.AppsettingStartappTests" Collapsed="true">
+    <Position X="4.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAD0AAAAAIQIAAgAAAAQJQgAEICBAAgAEAAAECABAAQ=</HashCode>
+      <FileName>UnitTests\AppsettingStartappTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

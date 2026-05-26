@@ -4,7 +4,7 @@ using SystemNotificationPersonal.DataAccess.Sqlite.Models;
 
 namespace SystemNotificationPersonal.DataAccess.Sqlite.Configurations
 {
-    internal class UsersConfiguration : IEntityTypeConfiguration<UsersEntity>
+    public class UsersConfiguration : IEntityTypeConfiguration<UsersEntity>
     {
         public void Configure(EntityTypeBuilder<UsersEntity> builder)
         {
